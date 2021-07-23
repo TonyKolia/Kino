@@ -1,0 +1,10 @@
+﻿@model IEnumerable<Kino.Models.KinoDBModel.Draw>
+
+@foreach(var draw in Model)
+{
+    <h1>@draw.DrawId</h1>
+    <h1>@draw.DrawDateTime</h1>
+    <h1>@draw.KinoBonus</h1>
+    <h1>@draw.WinningNumbers</h1>
+    <br />
+}
