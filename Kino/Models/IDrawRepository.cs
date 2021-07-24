@@ -12,5 +12,6 @@ namespace Kino.Models
         Task<IEnumerable<Draw>> SearchDraw(string DrawId, DateTime? dateFrom, DateTime? dateTo);
         Task<Draw> GetDraw(string DrawId);
         Task<Draw> AddDraw(Draw draw);
+        Task<Draw> GetMostRecentDraw();
     }
 }

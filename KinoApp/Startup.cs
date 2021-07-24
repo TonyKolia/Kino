@@ -25,6 +25,7 @@ namespace KinoApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddScoped<IServiceMethods, ServiceMethods>();
         }
 

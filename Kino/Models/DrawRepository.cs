@@ -54,5 +54,10 @@ namespace Kino.Models
 
             return await query.ToListAsync();
         }
+
+        public async Task<Draw> GetMostRecentDraw()
+        {
+            return await db.Draws.OrderByDescending(d => d.DrawDateTime).FirstOrDefaultAsync();
+        }
     }
 }

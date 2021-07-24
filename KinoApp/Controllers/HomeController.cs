@@ -29,43 +29,67 @@ namespace KinoApp.Controllers
 
         public IActionResult Index()
         {
-            var model = serviceMethods.PerformGet<IEnumerable<Draw>>(DrawServiceEndpoints.GetDraws, null, out var result);
-
-            return View(model);
+            return View(DrawViewModelDUMMY());
         }
 
         public IActionResult Privacy()
         {
-            //var draw = new Draw
-            //{
-            //    DrawDateTime = DateTime.Now,
-            //    DrawId = "1234",
-            //    KinoBonus = "32",
-            //    WinningNumbers = "123"
-            //};
-            //serviceMethods.PerformPost(DrawServiceEndpoints.AddDraw, null, draw, out var result);
-
-            var user = new User 
-            {
-                Id = 2,
-                Username = "tooooooost",
-                 Birthdate = DateTime.Now,
-                  Category = 2,
-                   Email = "teeeeest",
-                    Password = "12312312",
-                     RegisterDate = DateTime.Now
-            };
-
-
-            serviceMethods.PerformUpdate("User/UpdateUser", null, user,  out var result);
-
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        #region Helper Methods
+
+        private RecentDrawViewModel DrawViewModelDUMMY()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            var recentDraw = new Draw 
+            {
+                 DrawDateTime = DateTime.Now,
+                 DrawId = "891639",
+                 KinoBonus = "46",
+                 WinningNumbers = "25#41#51#28#22#9#8#3#75#24#55#77#6#69#26#7#62#67#80#46"
+            };
+
+            var drawHour = recentDraw.DrawDateTime.Value.Hour;
+            var drawMinute = recentDraw.DrawDateTime.Value.Minute;
+
+
+            var model = new RecentDrawViewModel
+            {
+                WinningNumbers = new List<int>(),
+                DrawId = recentDraw.DrawId,
+                DrawTime = (drawHour < 10 ? "0"+drawHour.ToString() : drawHour.ToString()) + ":" + (drawMinute < 10 ? "0" + drawMinute.ToString() : drawMinute.ToString()),
+                KinoBonus = int.Parse(recentDraw.KinoBonus)
+            };
+
+            var winningNumbers = recentDraw.WinningNumbers.Split("#");
+            foreach (var winningNumber in winningNumbers)
+            {
+                model.WinningNumbers.Add(int.Parse(winningNumber));
+            }
+
+            return model;
         }
+
+        private RecentDrawViewModel GetRecentDrawViewModel()
+        {
+            var recentDraw = serviceMethods.PerformGet<Draw>(DrawServiceEndpoints.GetMostRecentDraw, null, out var result);
+            var model = new RecentDrawViewModel
+            {
+                WinningNumbers = new List<int>(),
+                DrawId = recentDraw.DrawId,
+                //DrawDateTime = recentDraw.DrawDateTime,
+                KinoBonus = int.Parse(recentDraw.KinoBonus)
+            };
+
+            var winningNumbers = recentDraw.WinningNumbers.Split("#");
+            foreach (var winningNumber in winningNumbers)
+            {
+                model.WinningNumbers.Add(int.Parse(winningNumber));
+            }
+
+            return model;
+        }
+
+        #endregion
     }
 }

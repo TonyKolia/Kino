@@ -1,10 +1,57 @@
-﻿@model IEnumerable<Kino.Models.KinoDBModel.Draw>
+﻿@model RecentDrawViewModel
 
-@foreach(var draw in Model)
-{
-    <h1>@draw.DrawId</h1>
-    <h1>@draw.DrawDateTime</h1>
-    <h1>@draw.KinoBonus</h1>
-    <h1>@draw.WinningNumbers</h1>
-    <br />
-}
+@{ 
+    string numberClass = "";
+} 
+
+
+
+<div>
+    <div class="numbers-table-header">
+        <span>@Model.DrawTime</span>
+        <img class="img-logo" src="~/Images/kino-logo.png" />
+        <span>@Model.DrawId</span>
+    </div>
+
+    <table class="numbers-table">
+        <tbody>
+
+            @for (var i = 1; i <= 80; i++)
+            {
+                if (i == 0)
+                {
+                    @:<tr>
+                }
+
+                if(i == Model.KinoBonus)
+                {
+                    numberClass = "kino-bonus-number";
+                }
+                else if (Model.WinningNumbers.Contains(i))
+                {
+                    numberClass = "winning-number";
+                }
+                else
+                {
+                    numberClass = "";
+                }
+
+                <td class="number-cell @numberClass">
+                    @i
+                </td>
+
+                if (i % 10 == 0 && i != 0 && i != 80)
+                {
+                    @:</tr><tr>
+                }
+
+                if (i == 80)
+                {
+                    @:</tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+

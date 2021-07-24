@@ -75,6 +75,13 @@ namespace Kino.API.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("GetMostRecentDraw")]
+        public async Task<ActionResult> GetMostRecentDraw()
+        {
+            return Ok(await drawRepository.GetMostRecentDraw());
+        }
+
         [HttpPost]
         [Route("AddDrawFromOPAP")]
         public IActionResult AddDrawFromOPAP()

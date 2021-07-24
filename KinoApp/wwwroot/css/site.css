@@ -69,3 +69,46 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
+
+.img-logo{
+    height: 100px;
+}
+
+.numbers-table-header {
+    text-align: center;
+    background-color: #0a212f;
+    color: white;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    font-size: 50px;
+}
+
+.numbers-table {
+    background-color: #0a212f;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    height: 700px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.number-cell{
+    text-align: center;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 50px;
+    color: gray;
+}
+
+.kino-bonus-number {
+    background-color: red;
+    color: white !important;
+    border-radius: 50px;
+}
+
+.winning-number{
+    background-color: yellow;
+    border-radius: 50px;
+    color: black !important;
+}

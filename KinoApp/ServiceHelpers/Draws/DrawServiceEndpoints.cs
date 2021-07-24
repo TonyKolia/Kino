@@ -10,5 +10,6 @@ namespace KinoApp.ServiceHelpers.Draws
         public const string GetDraws = "Draw/GetDraws";
         public const string GetDraw = "Draw/GetDraw?drawId={0}";
         public const string AddDraw = "Draw/AddDraw";
+        public const string GetMostRecentDraw = "Draw/GetMostRecentDraw";
     }
 }
