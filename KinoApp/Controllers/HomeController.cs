@@ -12,6 +12,7 @@ using Kino.Models.KinoDBModel;
 using KinoApp.Helpers;
 using KinoApp.ServiceHelpers.Draws;
 using KinoApp.ServiceHelpers;
+using Microsoft.AspNetCore.Authorization;
 
 namespace KinoApp.Controllers
 {
@@ -27,6 +28,7 @@ namespace KinoApp.Controllers
             this.serviceMethods = serviceMethods;
         }
 
+        [AllowAnonymous]
         public IActionResult Index()
         {
             return View(DrawViewModelDUMMY());
@@ -49,15 +51,9 @@ namespace KinoApp.Controllers
                  WinningNumbers = "25#41#51#28#22#9#8#3#75#24#55#77#6#69#26#7#62#67#80#46"
             };
 
-            var drawHour = recentDraw.DrawDateTime.Value.Hour;
-            var drawMinute = recentDraw.DrawDateTime.Value.Minute;
-
-
-            var model = new RecentDrawViewModel
+            var model = new RecentDrawViewModel(recentDraw.DrawDateTime)
             {
-                WinningNumbers = new List<int>(),
                 DrawId = recentDraw.DrawId,
-                DrawTime = (drawHour < 10 ? "0"+drawHour.ToString() : drawHour.ToString()) + ":" + (drawMinute < 10 ? "0" + drawMinute.ToString() : drawMinute.ToString()),
                 KinoBonus = int.Parse(recentDraw.KinoBonus)
             };
 

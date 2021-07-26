@@ -67,5 +67,29 @@ namespace Kino.Models
 
             return userToUpdate;
         }
+
+        public async Task<bool> UserExists(string username, string email)
+        {
+            if (!string.IsNullOrEmpty(username))
+            {
+                return await db.Users.AnyAsync(u => u.Username == username);
+            }
+
+            if (!string.IsNullOrEmpty(email))
+            {
+                return await db.Users.AnyAsync(u => u.Email == email);
+            }
+
+            return false;
+        }
+
+        public async Task<bool> ValidateUserCredentials(string username, string password)
+        {
+            if(!await UserExists(username, null))
+            {
+                return false;
+            }
+            return await db.Users.AnyAsync(u => u.Username == username && u.Password == password);
+        }
     }
 }

@@ -13,5 +13,7 @@ namespace Kino.Models
         public Task<IEnumerable<User>> GetUsers();
         public Task<User> UpdateUser(User user);
         public Task DeteleUser(int id);
+        public Task<bool> UserExists(string username, string email);
+        public Task<bool> ValidateUserCredentials(string username, string password);
     }
 }

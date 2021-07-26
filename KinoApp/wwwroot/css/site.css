@@ -59,8 +59,9 @@ html {
 }
 
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+    background-color: #0a212f;
 }
 .footer {
   position: absolute;
@@ -70,21 +71,62 @@ body {
   line-height: 60px; /* Vertically center the text there */
 }
 
+.navbar-items-distance {
+    margin-right: 20px;
+    margin-left: 20px;
+}
+
+.navbar.center .navbar-inner {
+    text-align: center;
+}
+
+    .navbar.center .navbar-inner .nav {
+        display: inline-block;
+        float: none;
+        vertical-align: top;
+    }
+
+
+
+.fas {
+    padding-right: 10px;
+}
+
 .img-logo{
     height: 100px;
 }
 
+.register-form{
+    width:50%;
+}
+
+/*.navbar {
+    background-color: #0a212f !important;
+}*/
+
+.btn-gray {
+    background-color: #0a212f !important;
+    color: white !important;
+    border-color: #0a212f !important;
+}
+
+.btn-gray:hover {
+    background-color: lightgray !important;
+    color: white !important;
+    border-color: lightgray !important;
+}
+
 .numbers-table-header {
     text-align: center;
-    background-color: #0a212f;
+    background-color: #ffffff20;
     color: white;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-    font-size: 50px;
+    font-size: 30px;
 }
 
 .numbers-table {
-    background-color: #0a212f;
+    background-color: #ffffff20;
     margin-left: auto;
     margin-right: auto;
     width: 100%;
@@ -108,7 +150,63 @@ body {
 }
 
 .winning-number{
-    background-color: yellow;
+    background-color: yellow !important;
     border-radius: 50px;
     color: black !important;
+}
+
+.selected-number {
+    background-color: yellow !important;
+    border-radius: 50px;
+    color: black !important;
+}
+
+.selected-number:hover {
+    background-color: orange !important;
+    border-radius: 50px;
+    color: black !important;
+}
+
+.new-bet-number:hover {
+    background-color: #ffff0040;
+    cursor: pointer;
+    border-radius: 50px;
+}
+
+.number-of-numbers-table {
+    background-color: #ffffff20; /*#0a212f;*/
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    margin-bottom: 10px;
+    /*    border-right: 1px solid yellow;
+    border-left: 1px solid yellow;*/
+}
+
+.number-of-numbers-cell {
+    text-align: center;
+    padding-left: 5px;
+    padding-right: 5px;
+    font-size: 30px;
+    color: gray;
+}
+
+.number-of-numbers-cell:hover {
+    background-color: #ffff0040;
+    cursor: pointer;
+    border-radius: 50px;
+}
+
+.number-of-numbers-table-header {
+    text-align: center;
+    background-color: #ffffff20;
+    color: white;
+    font-size: 30px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    /*    border-top: 1px solid yellow;
+    border-right: 1px solid yellow;
+    border-left: 1px solid yellow;*/
 }

@@ -26,6 +26,16 @@ namespace Kino.API.Controllers
         {
             try
             {
+                if(await userRepository.UserExists(user.Username, null))
+                {
+                    return BadRequest("Useraname already exists");
+                }
+
+                if (await userRepository.UserExists(null, user.Email))
+                {
+                    return BadRequest("Email already exists");
+                }
+
                 var addedUser = await userRepository.AddUser(user);
                 return StatusCode(StatusCodes.Status201Created, addedUser);
             }
@@ -86,5 +96,27 @@ namespace Kino.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error updating user to the database");
             }
         }
+
+        [HttpGet]
+        [Route("UserExists")]
+        public async Task<ActionResult> UserExists(string username, string email)
+        {
+            return Ok(await userRepository.UserExists(username, email));
+        }
+
+        [HttpGet]
+        [Route("ValidateUserCredentials")]
+        public async Task<ActionResult> ValidateUserCredentials(string username, string password)
+        {
+            if (await userRepository.ValidateUserCredentials(username, password))
+            {
+                return Ok(await userRepository.GetUser(null, username));
+            }
+            else
+            {
+                return BadRequest("Invalida credential combination");
+            }
+        }
+
     }
 }

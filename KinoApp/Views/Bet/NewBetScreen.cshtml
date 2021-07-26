@@ -1,0 +1,110 @@
+﻿<div style="width:100%;margin-top:35px">
+    
+    <div style="width: 25%; margin-right: 2.5%; float:left">
+        <div class="form-group">
+            <div class="number-of-numbers-table-header">
+                How many numbers?
+            </div>
+            <table class="number-of-numbers-table">
+                <tbody>
+
+                    @for (var i = 1; i <= 12; i++)
+                    {
+                        if (i == 0)
+                        {
+                            @:<tr>
+                            }
+
+
+
+                            <td class="number-of-numbers-cell" id="number-@i-cell" onclick="markNumberAsSelected('number-@i.ToString()-cell');">
+                                @i
+                            </td>
+
+                            if (i % 3 == 0 && i != 0 && i != 12)
+                            {
+                            @:</tr><tr>
+                            }
+
+                            if (i == 12)
+                            {
+                            @:</tr>
+                        }
+                    }
+                </tbody>
+            </table>
+
+            <div class="number-of-numbers-table-header">
+                How many draws?
+            </div>
+
+            <table class="number-of-numbers-table">
+                <tbody>
+                    <tr>
+                        <td class="number-of-numbers-cell">1</td>
+                        @*id="number-@i-cell" onclick="markNumberAsSelected('number-@i.ToString()-cell');">*@
+                        <td class="number-of-numbers-cell">2</td>
+                        <td class="number-of-numbers-cell">3</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="number-of-numbers-table-header">
+                Bet amount?
+            </div>
+
+
+
+
+
+        </div>
+    </div>
+
+    <div style="width:70%; float:left;margin-left:2.5%;">
+
+        <div class="numbers-table-header">
+            <img class="img-logo" src="~/Images/kino-logo.png" />
+        </div>
+        <table class="numbers-table">
+            <tbody>
+
+                @for (var i = 1; i <= 80; i++)
+                {
+                    if (i == 0)
+                    {
+                        @:<tr>
+                        }
+
+
+
+                        <td class="number-cell new-bet-number" id="number-@i-cell" onclick="markNumberAsSelected('number-@i.ToString()-cell');">
+                            @i
+                        </td>
+
+                        if (i % 10 == 0 && i != 0 && i != 80)
+                        {
+                        @:</tr><tr>
+                        }
+
+                        if (i == 80)
+                        {
+                        @:</tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+
+
+
+
+
+
+
+
+</div>
+
+
+
+
+
