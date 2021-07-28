@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
@@ -46,6 +47,55 @@ namespace KinoApp.Helpers
                 Birthdate = DateTime.Parse(claimsPrincipal.Claims.FirstOrDefault(c => c.Type == "BirthDate")?.Value),
                 RegisterDate = DateTime.Parse(claimsPrincipal.Claims.FirstOrDefault(c => c.Type == "RegistrationDate")?.Value)
             };
+        }
+
+        public static bool IsObjectEmpty(object myObject)
+        {
+            var isObjectNull = true;
+            foreach (PropertyInfo pi in myObject.GetType().GetProperties())
+            {
+                if (pi.PropertyType == typeof(string))
+                {
+                    var value = (string)pi.GetValue(myObject);
+                    if (!string.IsNullOrEmpty(value))
+                    {
+                        isObjectNull = false;
+                        break;
+                    }
+                }
+
+                if (pi.PropertyType == typeof(int?))
+                {
+                    var value = (int?)pi.GetValue(myObject);
+                    if (value.HasValue)
+                    {
+                        isObjectNull = false;
+                        break;
+                    }
+                }
+
+                if (pi.PropertyType == typeof(decimal?))
+                {
+                    var value = (decimal?)pi.GetValue(myObject);
+                    if (value.HasValue)
+                    {
+                        isObjectNull = false;
+                        break;
+                    }
+                }
+
+                if (pi.PropertyType == typeof(DateTime?))
+                {
+                    var value = (DateTime?)pi.GetValue(myObject);
+                    if (value.HasValue)
+                    {
+                        isObjectNull = false;
+                        break;
+                    }
+                }
+            }
+
+            return isObjectNull;
         }
     }
 }

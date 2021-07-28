@@ -15,10 +15,12 @@ namespace Kino.Controllers
     public class UserBetsController : ControllerBase
     {
         private readonly IBetRepository betRepository;
+        private readonly IDrawRepository drawRepository;
 
-        public UserBetsController(IBetRepository betRepository)
+        public UserBetsController(IBetRepository betRepository, IDrawRepository drawRepository)
         {
             this.betRepository = betRepository;
+            this.drawRepository = drawRepository;
         }
 
         [HttpGet]
@@ -26,7 +28,7 @@ namespace Kino.Controllers
         public async Task<ActionResult> GetUserBets(int userId)
         {
             var bets = await betRepository.GetUserBets(userId);
-            if(bets.Count() > 0)
+            if (bets.Count() > 0)
             {
                 return Ok(bets);
             }
@@ -38,21 +40,33 @@ namespace Kino.Controllers
 
         [HttpPost]
         [Route("AddBet")]
-        public async Task<ActionResult> AddBet([FromBody] Bet bet)
+        public async Task<ActionResult> AddBet([FromBody] Bet bet, int? numberOfDraws)
         {
             try
             {
-                if(bet != null)
+                if (bet != null && numberOfDraws.HasValue)
                 {
-                    var betAdded = await betRepository.AddBet(bet);
-                    return StatusCode(StatusCodes.Status201Created, betAdded);
+                    var addedBets = new List<Bet>();
+                    var lastDraw = await drawRepository.GetMostRecentDraw();
+                    var lastDrawId = int.Parse(lastDraw.DrawId);
+                    
+                    for(var i = 0; i < numberOfDraws; i++)
+                    {
+                        lastDrawId++;
+                        bet.DrawId = lastDrawId.ToString();
+                        bet.Id = 0;
+                        var betAdded = await betRepository.AddBet(bet);
+                        addedBets.Add(betAdded);
+                    }
+
+                    return StatusCode(StatusCodes.Status201Created, addedBets);
                 }
                 else
                 {
-                    return BadRequest();
+                    return BadRequest("Empty bet sent or number of draws missing, please try again.");
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error adding bet to the database");
             }

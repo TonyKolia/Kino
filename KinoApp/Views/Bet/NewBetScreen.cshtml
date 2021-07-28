@@ -1,5 +1,20 @@
-﻿<div style="width:100%;margin-top:35px">
-    
+﻿@model NewBetViewModel
+@{ 
+    var selectedNumber = new List<int>();
+    if (Model != null)
+    {
+        if (!string.IsNullOrEmpty(Model.SelectedNumbers))
+        {
+            var stringNumbers = Model.SelectedNumbers.Split("#");
+            foreach (var sn in stringNumbers)
+            {
+
+            }
+        }
+    }
+
+}
+<div style="width:100%;margin-top:35px" id="new-bet-page">
     <div style="width: 25%; margin-right: 2.5%; float:left">
         <div class="form-group">
             <div class="number-of-numbers-table-header">
@@ -7,7 +22,6 @@
             </div>
             <table class="number-of-numbers-table">
                 <tbody>
-
                     @for (var i = 1; i <= 12; i++)
                     {
                         if (i == 0)
@@ -15,9 +29,13 @@
                             @:<tr>
                             }
 
+                            var selectedNumberClass = "";
+                            if (Model != null && Model.NumberOfSelectedNumbers.HasValue && i == Model.NumberOfSelectedNumbers)
+                            {
+                                selectedNumberClass = "selected-number";
+                            }
 
-
-                            <td class="number-of-numbers-cell" id="number-@i-cell" onclick="markNumberAsSelected('number-@i.ToString()-cell');">
+                            <td class="number-of-numbers-cell @selectedNumberClass" id="number-of-numbers-@i-cell" onclick="markNumberOfNumbersAsSelected('number-of-numbers-@i.ToString()-cell');">
                                 @i
                             </td>
 
@@ -41,23 +59,98 @@
             <table class="number-of-numbers-table">
                 <tbody>
                     <tr>
-                        <td class="number-of-numbers-cell">1</td>
-                        @*id="number-@i-cell" onclick="markNumberAsSelected('number-@i.ToString()-cell');">*@
-                        <td class="number-of-numbers-cell">2</td>
-                        <td class="number-of-numbers-cell">3</td>
+                        @for (var i = 1; i <= 3; i++)
+                        {
+                            var selectedNumberClass = "";
+                            if (Model != null && Model.NumberOfDraws.HasValue && i == Model.NumberOfDraws)
+                            {
+                                selectedNumberClass = "selected-number";
+                            }
+                            <td class="number-of-numbers-cell @selectedNumberClass" id="number-of-draws-@i.ToString()-cell" onclick="markNumberOfDrawsAsSelected('number-of-draws-@i.ToString()-cell');">@i</td>
+                        }
                     </tr>
                 </tbody>
             </table>
 
             <div class="number-of-numbers-table-header">
-                Bet amount?
+                Bet amount per draw?
+            </div>
+            <table class="number-of-numbers-table">
+                <tbody>
+                    @for (var i = 1; i <= 9; i++)
+                    {
+                        if (i == 0)
+                        {
+                            @:<tr>
+                            }
+
+                            var selectedNumberClass = "";
+                            if (Model != null && Model.BetAmount.HasValue && i == (int)Model.BetAmount)
+                            {
+                                selectedNumberClass = "selected-number";
+                            }
+
+                            <td class="number-of-numbers-cell @selectedNumberClass" id="bet-amount-@i.ToString()-cell" onclick="markBetAmountAsSelected('bet-amount-@i.ToString()-cell');">
+                                @i
+                            </td>
+
+                            if (i % 3 == 0 && i != 0 && i != 9)
+                            {
+                            @:</tr><tr>
+                            }
+
+                            if (i == 9)
+                            {
+                            @:</tr>
+                        }
+                    }
+                </tbody>
+            </table>
+            <div style="width:100%">
+                <div class="btn-center">
+                    <button type="button" onclick="SubmitBet();" class="form-control btn btn-primary btn-gray">Place bet</button>
+                </div>
+
             </div>
 
 
-
-
-
         </div>
+        <form id="new-bet-form" asp-controller="Bet" asp-action="NewBet" method="post">
+            <input type="hidden" id="new-bet-selected-numbers" asp-for="SelectedNumbers" />
+            <input type="hidden" id="new-bet-number-of-selected-numbers" asp-for="NumberOfSelectedNumbers" />
+            <input type="hidden" id="new-bet-number-of-draws" asp-for="NumberOfDraws" />
+            <input type="hidden" id="new-bet-bet-amount" asp-for="BetAmount" />
+        </form>
+        @{
+            if (ViewBag.Errors != null)
+            {
+                var errors = (string[])ViewBag.Errors;
+                if (errors.Count() > 0)
+                {
+                <div class="alert-danger" onclick="dismissAlert();">
+                            <h4 class="alert-heading" style="text-align:center">Some things are missing from your bet!</h4>
+                    <hr>
+                    @foreach (var error in errors)
+                    {
+                        <div>
+                            <i class="fas fa-exclamation-circle"></i>@error
+                        </div>
+                    }
+                </div>
+                }
+            }
+
+            if (ViewBag.Error != null || ViewBag.Success != null)
+            {
+                var message = ViewBag.Error != null ? ViewBag.Error.ToString() : ViewBag.Success.ToString();
+                var messageClass = ViewBag.Error != null ? "alert-danger alert-dismissible" : "alert-success";
+                var iconClass = ViewBag.Error != null ? "fa-exclamation-circle" : "fa-check-circle";
+                <div class="@messageClass">
+                    <i class="fas @iconClass"></i>@message
+                </div>
+            }
+        }
+
     </div>
 
     <div style="width:70%; float:left;margin-left:2.5%;">
@@ -73,35 +166,26 @@
                     if (i == 0)
                     {
                         @:<tr>
-                        }
+                    }
 
+                    <td class="number-cell new-bet-number" id="number-@i-cell" onclick="markNumberAsSelected('number-@i.ToString()-cell');">
+                        @i
+                    </td>
 
-
-                        <td class="number-cell new-bet-number" id="number-@i-cell" onclick="markNumberAsSelected('number-@i.ToString()-cell');">
-                            @i
-                        </td>
-
-                        if (i % 10 == 0 && i != 0 && i != 80)
-                        {
+                    if (i % 10 == 0 && i != 0 && i != 80)
+                    {
                         @:</tr><tr>
-                        }
+                    }
 
-                        if (i == 80)
-                        {
+                    if (i == 80)
+                    {
                         @:</tr>
                     }
                 }
             </tbody>
         </table>
     </div>
-
-
-
-
-
-
-
-
+    @Html.Hidden("RestoreNumbers", Model != null)
 </div>
 
 

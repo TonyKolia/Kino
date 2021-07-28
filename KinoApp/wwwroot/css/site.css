@@ -105,15 +105,21 @@ body {
 }*/
 
 .btn-gray {
-    background-color: #0a212f !important;
-    color: white !important;
-    border-color: #0a212f !important;
+    background-color: yellow !important;
+    color: black !important;
+    border-color: yellow !important;
 }
 
 .btn-gray:hover {
-    background-color: lightgray !important;
-    color: white !important;
-    border-color: lightgray !important;
+    background-color: transparent !important;
+    color: yellow !important;
+    border-color: yellow !important;
+}
+
+.btn-center{
+    width: 50%;
+    margin-left: auto !important;
+    margin-right: auto !important;
 }
 
 .numbers-table-header {
@@ -209,4 +215,10 @@ body {
     /*    border-top: 1px solid yellow;
     border-right: 1px solid yellow;
     border-left: 1px solid yellow;*/
+}
+
+.alert-success,
+.alert-danger{
+    padding: 10px;
+    border-radius: 10px;
 }
