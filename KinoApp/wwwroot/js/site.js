@@ -173,9 +173,18 @@ function restoreNewBetInput() {
         }
     }
 
+    for (var i = 1; i <= 80; i++) {
 
+        var numberCell = $('#number-' + i + '-cell');
+        if (numberCell != null && numberCell.hasClass("selected-number")) {
+            var number = numberCell.text().trim();
+            selectedNumbers.push(number);
+        }
+    }
+
+    console.log(selectedNumbers);
     console.log(numberOfNumbers);
     console.log(numberOfDraws);
     console.log(betAmount);
-
+    
 }

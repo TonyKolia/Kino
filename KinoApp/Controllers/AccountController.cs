@@ -74,6 +74,11 @@ namespace KinoApp.Controllers
                 return View();
             }
 
+            if (string.IsNullOrEmpty(returnUrl) || returnUrl == "/")
+            {
+                returnUrl = "~/Home/Index";
+            }
+
             return Redirect(returnUrl);
         }
 
@@ -145,7 +150,8 @@ namespace KinoApp.Controllers
                     serviceMethods.PerformPost(UserServiceEndpoints.AddUser, null, user, out var result);
                     if (!result.Success)
                     {
-                        ModelState.AddModelError("UserExists", result.Message);
+                        var message = Newtonsoft.Json.JsonConvert.DeserializeObject<string>(result.Message);
+                        ModelState.AddModelError("UserExists", message);
                         return false;
                     }
 

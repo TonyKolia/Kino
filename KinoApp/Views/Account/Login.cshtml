@@ -5,6 +5,8 @@
 }
 
 <div class="register-form">
+    <h2 class="form-label">Login to your account</h2>
+    <hr class="yello-hr">
     <form asp-controller="Account" asp-action="Login" asp-route-returnUrl="@returnUrl" method="post">
         <div class="form-group">
             <i class="fas fa-user"></i><label asp-for="Username"></label>
@@ -15,10 +17,33 @@
             <input class="form-control" asp-for="Password" />
         </div>
 
-        <div asp-validation-summary="All" class="form-group">
+        @*<div asp-validation-summary="All" class="alert-danger"></div>*@
 
+
+        @if (ViewData.ModelState.Keys.Any(k => ViewData.ModelState[k].Errors.Any()))
+        {
+            <div class="alert-danger" style="margin-bottom:15px;">
+                @foreach (var error in ViewData.ModelState.Values)
+                {
+                    foreach (var er in error.Errors)
+                    {
+                        <div>
+                            <i class="fas fa-exclamation-circle"></i>@er.ErrorMessage
+                        </div>
+                    }
+                }
+            </div>
+        }
+
+        <div style="width:100%;text-align:center">
+            <div class="btn-center">
+                <button type="submit" class="form-control btn btn-primary btn-gray" style="background-color:yellow;color:black">Login</button>
+                <div style="margin-top:10px;">
+                    <span>Not a member? <a href="~/Account/Register" style="color:yellow">Register now!</a></span>
+                </div>
+
+            </div>
         </div>
 
-        <button type="submit" class="btn btn-primary btn-gray" style="background-color:yellow;color:black">Login</button>
     </form>
 </div>

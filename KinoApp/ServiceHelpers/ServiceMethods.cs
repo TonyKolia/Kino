@@ -21,7 +21,7 @@ namespace KinoApp.ServiceHelpers
             else
             {
                 result.Success = false;
-                result.Message = response.Content;
+                result.Message = JsonConvert.DeserializeObject<string>(response.Content);
                 return default;
             }
         }
@@ -32,7 +32,7 @@ namespace KinoApp.ServiceHelpers
             result = new OperationResult 
             {
                 Success = response.StatusCode == HttpStatusCode.Created,
-                Message = response.Content
+                Message = response.StatusCode == HttpStatusCode.Created ? "Created Successfully!" : JsonConvert.DeserializeObject<string>(response.Content)
             };
         }
 
@@ -42,7 +42,7 @@ namespace KinoApp.ServiceHelpers
             result = new OperationResult
             {
                 Success = response.StatusCode == HttpStatusCode.OK,
-                Message = response.Content
+                Message = response.StatusCode == HttpStatusCode.OK ? "Deleted Successfully!" : JsonConvert.DeserializeObject<string>(response.Content)
             };
         }
 
@@ -52,7 +52,7 @@ namespace KinoApp.ServiceHelpers
             result = new OperationResult
             {
                 Success = response.StatusCode == HttpStatusCode.OK,
-                Message = response.Content
+                Message = response.StatusCode == HttpStatusCode.OK ? "Updated Successfully!" : JsonConvert.DeserializeObject<string>(response.Content)
             };
         }
     }

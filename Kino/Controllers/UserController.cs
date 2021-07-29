@@ -28,7 +28,7 @@ namespace Kino.API.Controllers
             {
                 if(await userRepository.UserExists(user.Username, null))
                 {
-                    return BadRequest("Useraname already exists");
+                    return BadRequest("Username already exists");
                 }
 
                 if (await userRepository.UserExists(null, user.Email))
@@ -114,7 +114,7 @@ namespace Kino.API.Controllers
             }
             else
             {
-                return BadRequest("Invalida credential combination");
+                return BadRequest("Invalid credential combination");
             }
         }
 
