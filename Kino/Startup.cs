@@ -1,3 +1,4 @@
+using Kino.API.Models;
 using Kino.Models;
 using Kino.Models.KinoDBModel;
 using Microsoft.AspNetCore.Builder;
@@ -40,6 +41,7 @@ namespace Kino
             services.AddScoped<IDrawRepository, DrawRepository>();
             services.AddScoped<IBetRepository, BetRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IOutcomeRepository, OutcomeRepository>();
 
 
 

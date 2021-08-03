@@ -77,6 +77,15 @@ body {
     margin-left: 20px;
 }
 
+.navbar{
+    background-color: #ffffff20 !important;
+}
+
+.dropdown-menu {
+    min-width: max-content;
+    background-color: #0a212f;
+}
+
 .navbar.center .navbar-inner {
     text-align: center;
 }
@@ -133,6 +142,14 @@ input[type=date] {
 
 .img-logo{
     height: 100px;
+}
+
+.img-logo-top {
+    height: 50px;
+}
+
+.img-logo-top:hover{
+    cursor:pointer;
 }
 
 .register-form{
@@ -273,4 +290,27 @@ input[type=date] {
 .alert-danger{
     padding: 10px;
     border-radius: 10px;
+}
+
+.bet-card{
+    background-color: #ffffff20;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: none;
+    border-radius: 10px;
+    background-color: transparent;
+}
+
+::-webkit-scrollbar {
+    width: 12px;
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: none;
+    background-color: #ffffff40;
 }

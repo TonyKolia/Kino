@@ -188,3 +188,7 @@ function restoreNewBetInput() {
     console.log(betAmount);
     
 }
+
+function redirectToHome() {
+    window.location.href ="/Home/Index"
+}

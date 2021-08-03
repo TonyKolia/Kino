@@ -1,57 +1,159 @@
-﻿@model RecentDrawViewModel
+﻿@model HomeViewModel
 
-@{ 
+@{
     string numberClass = "";
-} 
+}
 
 
+<div style="width:100%;margin-top:30px">
 
-<div>
-    <div class="numbers-table-header">
-        <span>@Model.DrawTime</span>
-        <img class="img-logo" src="~/Images/kino-logo.png" />
-        <span>@Model.DrawId</span>
+    <div style="width: 30%; float: left;">
+        <h2 class="form-label">Recent bets</h2>
+        @*<hr class="yello-hr">*@
+
+    <div style="overflow-y: scroll; height: calc(100vh - 260px); ">
+        @if (User.Identity.IsAuthenticated)
+        {
+            if (Model.UserBets.Count() > 0)
+            {
+                <div id="recent-bets-container">
+                    @foreach (var bet in Model.UserBets)
+                    {
+                        var hoverText = Model.Outcomes.Where(r => r.Id == bet.Outcome).Select(r => r.Description).FirstOrDefault();
+                        var color = "";
+                        var icon = "";
+                        switch (bet.Outcome)
+                        {
+                            case 1:
+                                color = "gray";
+                                icon = "fa-question-circle";
+                                break;
+                            case 2:
+                                color = "#28a745";
+                                icon = "fa-check-circle";
+                                break;
+                            case 3:
+                                color = "#dc3545";
+                                icon = "fa-times-circle";
+                                break;
+                            default:
+                                color = "white";
+                                break;
+                        }
+
+                        <div class="card bet-card">
+                            <div class="card-body">
+                                <div style="padding-left:10px;padding-top:10px;">
+                                    <div style="width:20%;float:left">
+                                        <span><i class="fas @icon" title="@hoverText" style="color: @color;"></i><span style="color:gray">@bet.Id</span></span>
+                                    </div>
+                                    <div style="width:20%;float:left">
+                                        <span style="color:gray"><i class="fas fa-hashtag"></i>@bet.DrawId</span>
+                                    </div>
+                                    <div style="width:20%;float:left;text-align:center">
+                                        <span style="color:gray"><i class="fas fa-euro-sign"></i>@bet.BetAmount.Value.ToString("N2")</span>
+                                    </div>
+                                    <div style="width: 40%; float: left; text-align: right">
+                                        <span style="color:gray"><i class="fas fa-calendar"></i>@bet.BetDate.Value.ToString("dd/MM/yyyy HH:mm")</span>
+                                    </div>
+
+                                </div>
+                                <hr class="yello-hr" style="margin-top:2rem" />
+                                <div style="text-align:center">
+                                    @foreach (var number in bet.SelectedNumbers.Split("#"))
+                                    {
+                                        var padding = "";
+                                        if (int.Parse(number) < 10)
+                                        {
+                                            padding = "11px";
+                                        }
+                                        else
+                                        {
+                                            padding = "6px";
+                                        }
+                                        <span style="color:black;align-items:center;display: inline-flex; width: 30px; height: 30px; border-radius: 50px; background-color: yellow; padding: @padding">@number</span>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+            }
+            else
+            {
+                <div class="card bet-card">
+                    <div class="card-body" style="text-align:center">
+                        You have no recent bets.
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="card bet-card">
+                <div class="card-body" style="text-align:center">
+                    Please login to see your recent bets!
+                </div>
+            </div>
+        }
     </div>
 
-    <table class="numbers-table">
-        <tbody>
 
-            @for (var i = 1; i <= 80; i++)
-            {
-                if (i == 0)
+
+
+
+    </div>
+
+
+    <div style="width:65%;float:left;margin-left:5%">
+        <div class="numbers-table-header">
+                <span style="color:gray;margin-right:25%"><i class="fas fa-clock"></i>@Model.DrawTime</span>
+                <img class="img-logo" src="~/Images/kino-logo.png" />
+                <span style="color:gray;margin-left:25%"><i class="fas fa-hashtag"></i>@Model.DrawId</span>
+        </div>
+        <table class="numbers-table">
+            <tbody>
+
+                @for (var i = 1; i <= 80; i++)
                 {
+                    if (i == 0)
+                    {
                     @:<tr>
-                }
+                    }
 
-                if(i == Model.KinoBonus)
-                {
-                    numberClass = "kino-bonus-number";
-                }
-                else if (Model.WinningNumbers.Contains(i))
-                {
-                    numberClass = "winning-number";
-                }
-                else
-                {
-                    numberClass = "";
-                }
+                    if (i == Model.KinoBonus)
+                    {
+                        numberClass = "kino-bonus-number";
+                    }
+                    else if (Model.WinningNumbers.Contains(i))
+                    {
+                        numberClass = "winning-number";
+                    }
+                    else
+                    {
+                        numberClass = "";
+                    }
 
-                <td class="number-cell @numberClass">
-                    @i
-                </td>
+                    <td class="number-cell @numberClass">
+                        @i
+                    </td>
 
-                if (i % 10 == 0 && i != 0 && i != 80)
-                {
-                    @:</tr><tr>
-                }
+                    if (i % 10 == 0 && i != 0 && i != 80)
+                    {
+                        @:</tr><tr>
+                    }
 
-                if (i == 80)
-                {
-                    @:</tr>
+                    if (i == 80)
+                    {
+                        @:</tr>
+                    }
                 }
-            }
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
+
 </div>
+
 
 

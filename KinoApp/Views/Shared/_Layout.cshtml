@@ -18,23 +18,25 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="nav-item">
-                <a class="nav-link" asp-controller="Home" asp-action="Index">Home</a>
+                <img class="img-logo-top" src="~/Images/kino-logo.png" title="Home" onclick="redirectToHome();"/>
+                @*<a class="nav-link" asp-controller="Home" asp-action="Index">Home</a>*@
             </div>
             <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" asp-controller="Bet" asp-action="NewBet">Play now!</a>
+                        <a class="nav-link btn btn-gray" asp-controller="Bet" asp-action="NewBet">Play now!</a>
                     </li>
                 </ul>
             </div>
             @if (User.Identity.IsAuthenticated)
             {
                 <div class="nav-item dropdown navbar-items-distance">
-                    <a class='nav-link dropdown-toggle login-link' href='#' id='navbarDropdown' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
-                        <i class='fas fa-user'></i>@currentUser.Username
+                    <a style="color:yellow !important" class='nav-link dropdown-toggle login-link' href='#' id='navbarDropdown' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+                        <i class='fas fa-user' ></i>@currentUser.Username
                     </a>
                     <div class='dropdown-menu' aria-labelledby='navbarDropdown'>
-                        <a class="nav-link" asp-controller="Account" asp-action="Logout">Logout</a>
+                        <a class="nav-link" style="color:yellow !important" asp-controller="" asp-action=""><i class="fas fa-history"></i>Past draws</a>
+                        <a class="nav-link" style="color:yellow !important" asp-controller="Account" asp-action="Logout"><i class="fas fa-sign-out-alt"></i>Logout</a>
                     </div>
                         
                 </div>
@@ -42,7 +44,7 @@
             else
             {
                 <div class="nav-item">
-                    <a class="nav-link" asp-controller="Account" asp-action="Login">Login</a>
+                    <a style="color:yellow !important" class="nav-link" asp-controller="Account" asp-action="Login"><i class="fas fa-sign-in-alt"></i>Login</a>
                 </div>
             }
 
